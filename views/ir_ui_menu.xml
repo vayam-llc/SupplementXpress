@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record model="ir.ui.menu" id="menu_rebalancing_report_pivot">
+    <field name="action" ref="base_sx.action_rebalancing_report"/>
+    <field name="active" eval="True"/>
+    <field name="groups_id" eval="[(6, 0, [])]"/>
+    <field name="name">Rebalancing Report</field>
+    <field name="parent_id" ref="stock.menu_stock_warehouse_mgmt"/>
+    <field name="sequence">90</field>
+    <field name="web_icon" eval="False"/>
+  </record>
+  <record model="ir.ui.menu" id="menu_incoming_outgoing_report_pivot">
+    <field name="action" ref="base_sx.action_incoming_outgoing_report"/>
+    <field name="active" eval="True"/>
+    <field name="groups_id" eval="[(6, 0, [])]"/>
+    <field name="name">Incoming Outgoing Report</field>
+    <field name="parent_id" ref="stock.menu_stock_warehouse_mgmt"/>
+    <field name="sequence">99</field>
+    <field name="web_icon" eval="False"/>
+  </record>
+</odoo>
