@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record model="ir.actions.act_window" id="action_sale_order_credit_limit_wizard">
+      <field name="auto_search" eval="True"/>
+      <field name="context">{}</field>
+      <field name="groups_id" eval="[(6, 0, [])]"/>
+      <field name="limit">80</field>
+      <field name="name">Customer Over Credit Limit</field>
+      <field name="res_model">sale.order.credit.limit.wizard</field>
+      <field name="target">new</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="view_id" eval="False"/>
+      <field name="view_ids" eval="[(6, 0, [])]"/>
+      <field name="view_mode">form</field>
+      <field name="view_type">form</field>
+    </record>
+    <record model="ir.actions.act_window" id="action_purchase_order_line_tree">
+      <field name="auto_search" eval="True"/>
+      <field name="context">{}</field>
+      <field name="groups_id" eval="[(6, 0, [])]"/>
+      <field name="limit">80</field>
+      <field name="name">Historic Vendor Prices</field>
+      <field name="res_model">purchase.order.line</field>
+      <field name="target">new</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="view_id" ref="base_sx.purchase_order_line_tree_view"/>
+      <field name="view_ids" eval="[(6, 0, [])]"/>
+      <field name="view_mode">tree</field>
+      <field name="view_type">form</field>
+    </record>
+    <record model="ir.actions.act_window" id="action_incoming_outgoing_report">
+      <field name="name">Incoming Outgoing Report</field>
+      <field name="res_model">incoming.outgoing.report</field>
+      <field name="auto_search" eval="True"/>
+      <field name="context">{}</field>
+      <field name="limit">80</field>
+      <field name="src_model" eval="False"/>
+      <field name="target">current</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="view_id" ref="base_sx.view_incoming_outgoing_report_pivot"/>
+      <field name="view_ids" eval="[(6, 0, [])]"/>
+      <field name="view_mode">pivot</field>
+    </record>
+    <record model="ir.actions.act_window" id="action_rebalancing_report">
+      <field name="name">Rebalancing Report</field>
+      <field name="res_model">stock.warehouse.orderpoint</field>
+      <field name="auto_search" eval="True"/>
+      <field name="context">{}</field>
+      <field name="limit">80</field>
+      <field name="src_model" eval="False"/>
+      <field name="target">current</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="view_id" ref="base_sx.view_rebalancing_report_tree"/>
+      <field name="view_ids" eval="[(6, 0, [])]"/>
+      <field name="view_mode">tree</field>
+    </record>
+    <record model="ir.actions.act_window" id="action_stock_movement_wizard">
+      <field name="auto_search" eval="True"/>
+      <field name="context">{}</field>
+      <field name="groups_id" eval="[(6, 0, [])]"/>
+      <field name="limit">80</field>
+      <field name="name">Create Transfer</field>
+      <field name="res_model">stock.movement.wizard</field>
+      <field name="target">new</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="view_id" eval="False"/>
+      <field name="view_ids" eval="[(6, 0, [])]"/>
+      <field name="view_mode">form</field>
+      <field name="view_type">form</field>
+    </record>
+  </data>
+</odoo>

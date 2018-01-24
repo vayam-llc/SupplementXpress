@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="sale_order_credit_limit_wizard_form">
+          <field name="name">x_vayam.sale.order.credit.limit.form</field>
+          <field name="model">sale.order.credit.limit.wizard</field>
+          <field name="inherit_id" eval="False"/>
+          <field name="priority">16</field>
+          <field name="groups_id" eval="[(6, 0, [])]"/>
+          <field name="type">form</field>
+          <field name="mode">primary</field>
+          <field name="arch" type="xml">
+            <form>
+                  <field name="sale_id" invisible="1"/>
+                  <div><span>With this order, the customer is over their credit limit by $</span><field name="over_limit"/><span> (Credit Limit: $</span><field name="credit_limit"/><span>). Accounting managers have the ability to force confirm the order. If you do not have access, please ask an accountant to force confirm this order.</span></div>
+                <footer>
+                    <button name="force_confirm" string="Force Confirm" type="object" class="btn-primary" groups="account.group_account_manager"/>
+                    <button string="Cancel" class="btn-default" special="cancel" />
+                </footer>
+            </form>
+          </field>
+    </record>
+    <record model="ir.ui.view" id="view_partner_form">
+      <field name="name">x_vayam.res.partner.form.mod</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form"/>
+      <field name="priority">99</field>
+      <field name="arch" type="xml">
+        <data>
+          <xpath expr="//field[@name='trust']" position="after">
+               <field name="credit"/>
+               <field name="credit_limit"/>
+          </xpath>
+        </data>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="purchase_order_form_mod">
+      <field name="name">x_vayam.purchase.order.form.mod</field>
+      <field name="model">purchase.order</field>
+      <field name="inherit_id" ref="purchase.purchase_order_form"/>
+      <field name="priority">99</field>
+      <field name="arch" type="xml">
+        <data>
+          <xpath expr="//field[@name='order_line']//tree//field[@name='price_unit']" position="before">
+               <field name="past_price_unit"/>
+               <button name="open_past_prices" type="object" icon="fa-tags"/>
+          </xpath>
+        </data>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="purchase_order_line_tree_view">
+          <field name="name">x_vayam.purchase.order.line.tree</field>
+          <field name="model">purchase.order.line</field>
+          <field name="inherit_id" eval="False"/>
+          <field name="priority">16</field>
+          <field name="groups_id" eval="[(6, 0, [])]"/>
+          <field name="type">tree</field>
+          <field name="mode">primary</field>
+          <field name="arch" type="xml">
+            <tree create="0" edit="0">
+              <field name="order_id"/>
+              <field name="partner_id" string="Vendor"/>
+              <field name="product_id"/>
+              <field name="price_unit"/>
+              <field name="product_qty"/>
+              <field name="product_uom" groups="product.group_uom"/>
+              <field name="price_subtotal" widget="monetary"/>
+              <field name="state" invisible="1"/>
+            </tree>
+          </field>
+    </record>
+    <record model="ir.ui.view" id="view_incoming_outgoing_report_tree">
+      <field name="name">x_vayam.incoming.outgoing.report.tree</field>
+      <field name="model">incoming.outgoing.report</field>
+      <field name="mode">primary</field>
+      <field name="type">tree</field>
+      <field name="inherit_id" eval="False"/>
+      <field name="priority">16</field>
+      <field name="arch" type="xml">
+          <tree string="Rebalancing Report" create="0" delete="0">
+              <field name="reorderpoint"/>
+              <field name="past_ninety_sales"/>
+              <field name="location_id"/>
+              <field name="product_id"/>
+              <field name="product_template_id"/>
+              <field name="incoming"/>
+              <field name="quantity"/>
+              <field name="outgoing"/>
+              <field name="net_available"/>
+          </tree>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="view_incoming_outgoing_report_pivot">
+      <field name="name">x_vayam.incoming.outgoing.report.pivot</field>
+      <field name="model">incoming.outgoing.report</field>
+      <field name="mode">primary</field>
+      <field name="type">pivot</field>
+      <field name="inherit_id" eval="False"/>
+      <field name="priority">16</field>
+      <field name="arch" type="xml">
+          <pivot string="Rebalancing Report" disable_linking="True">
+               <field name="location_id" type="row"/>
+               <field name="product_id" type="row"/>
+               <field name="product_min_qty" type="measure"/>
+               <field name="incoming" type="measure"/>
+               <field name="quantity" type="measure"/>
+               <field name="outgoing" type="measure"/>
+               <field name="available" type="measure"/>
+               <field name="net_available" type="measure"/>
+           </pivot>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="view_rebalancing_report_tree">
+      <field name="name">x_vayam.rebalancing.report.tree</field>
+      <field name="model">stock.warehouse.orderpoint</field>
+      <field name="mode">primary</field>
+      <field name="type">tree</field>
+      <field name="inherit_id" eval="False"/>
+      <field name="priority">16</field>
+      <field name="arch" type="xml">
+          <tree string="Rebalancing Report" create="0" delete="0">
+              <field name="product_id"/>
+              <field name="product_min_qty"/>
+              <field name="min_proposed"/>
+              <field name="product_max_qty"/>
+              <field name="quantity_available"/>
+              <field name="quantity_over"/>
+              <field name="location_id"/>
+              <field name="past_ninety_sales"/>
+              <field name="avg_daily_sales"/>
+              <field name="days_on_hand"/>
+              <field name="movement_classification"/>
+              <button name="open_rebalance_wizard" type="object" icon="fa-balance-scale"/>
+          </tree>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="stock_movement_wizard_form">
+          <field name="name">x_vayam.stock.movemement.form</field>
+          <field name="model">stock.movement.wizard</field>
+          <field name="inherit_id" eval="False"/>
+          <field name="priority">16</field>
+          <field name="groups_id" eval="[(6, 0, [])]"/>
+          <field name="type">form</field>
+          <field name="mode">primary</field>
+          <field name="arch" type="xml">
+            <form>
+                <group string="Available Locations">
+                  <field name="orderpoint_ids" nolabel="1">
+                    <tree create="0" edit="0">
+                      <field name="product_id"/>
+                      <field name="product_min_qty"/>
+                      <field name="min_proposed"/>
+                      <field name="quantity_available"/>
+                      <field name="quantity_over"/>
+                      <field name="location_id"/>
+                      <field name="past_ninety_sales"/>
+                      <field name="avg_daily_sales"/>
+                      <field name="days_on_hand"/>
+                      <field name="movement_classification"/>
+                    </tree>
+                  </field>
+                </group>
+                <group>
+                  <field name="stock_warehouse_orderpoint" invisible="1"/>
+                  <field name="location_id" domain="[('usage','=','internal')]" required="1" options="{&quot;no_open&quot;:True,&quot;no_create&quot;:True}"/>
+                  <field name="location_dest_id" required="1" domain="[('usage','=','internal')]" options="{&quot;no_open&quot;:True,&quot;no_create&quot;:True}"/>
+                  <field name="quantity" required="1"/>
+                  <field name="product_id" invisible="1" required="1"/>
+                  <field name="picking_type_id" invisible="1" required="1"/>
+                </group>
+                <footer>
+                    <button name="create_move" string="Create Transfer" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel" />
+                </footer>
+            </form>
+          </field>
+    </record>
+  </data>
+</odoo>
