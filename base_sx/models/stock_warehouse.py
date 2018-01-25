@@ -39,7 +39,6 @@ class Orderpoint(models.Model):
             ('location_dest_id.usage','=','customer'),
             ('location_id','=',record.location_id.id),
             ('state','in',['done']),
-            ('is_done','=',True),
             ('product_id','=',record.product_id.id),
             ])
             moves_not_location = record.env['stock.move'].search([
@@ -47,7 +46,6 @@ class Orderpoint(models.Model):
             ('date_done','<',now.strftime('%Y-%m-%d %H:%M:%S')),
             ('location_dest_id.usage','=','customer'),
             ('state','in',['done']),
-            ('is_done','=',True),
             ('product_id','=',record.product_id.id),
             ])
             sales = 0
