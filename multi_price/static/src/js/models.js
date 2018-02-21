@@ -3,7 +3,8 @@ odoo.define('multi_price.models', function (require) {
 
 
 var models = require('point_of_sale.models');
-var pos_db = require('point_of_sale.DB')
+var pos_db = require('point_of_sale.DB');
+var chrome = require('point_of_sale.chrome');
 
 var _super_posmodel = models.PosModel.prototype;
 var orderlinemodel = models.Orderline.prototype;
@@ -46,6 +47,28 @@ var orderlinemodel = models.Orderline.prototype;
     },
 
     });
+
+
+chrome.OrderSelectorWidget.include({
+    renderElement: function(){
+        var self = this;
+        this._super();
+        var categ = [];
+        var unit = [];
+        for (var i in self.pos.categories){
+            categ.push(self.pos.categories[i].name);
+        }
+        for (var i in self.pos.units){
+            unit.push(self.pos.units[i].name);
+        }
+        this.$('.add-product').click(function(event){
+            console.log("Asdas");
+            var product = self.pos.get_order().get_selected_orderline().get_product();
+            self.pos.get_order().get_selected_orderline().set_unit_price(self.pos.get_order().get_selected_orderline().get_product().secondary_price);
+        });
+    },
+});
+
 pos_db.PosDB = pos_db.PosDB.extend({
 
 _product_search_string: function(product){
@@ -67,6 +90,53 @@ _product_search_string: function(product){
         }
         str  = product.id + ':' + str.replace(/:/g,'') + '\n';
         return str;
+    },
+
+
+      add_products: function(products){
+        var stored_categories = this.product_by_category_id;
+
+        if(!products instanceof Array){
+            products = [products];
+        }
+        for(var i = 0, len = products.length; i < len; i++){
+            var product = products[i];
+            var search_string = this._product_search_string(product);
+            var categ_id = product.pos_categ_id ? product.pos_categ_id[0] : this.root_category_id;
+            product.product_tmpl_id = product.product_tmpl_id[0];
+            if(!stored_categories[categ_id]){
+                stored_categories[categ_id] = [];
+            }
+            stored_categories[categ_id].push(product.id);
+
+            if(this.category_search_string[categ_id] === undefined){
+                this.category_search_string[categ_id] = '';
+            }
+            this.category_search_string[categ_id] += search_string;
+
+            var ancestors = this.get_category_ancestors_ids(categ_id) || [];
+
+            for(var j = 0, jlen = ancestors.length; j < jlen; j++){
+                var ancestor = ancestors[j];
+                if(! stored_categories[ancestor]){
+                    stored_categories[ancestor] = [];
+                }
+                stored_categories[ancestor].push(product.id);
+
+                if( this.category_search_string[ancestor] === undefined){
+                    this.category_search_string[ancestor] = '';
+                }
+                this.category_search_string[ancestor] += search_string;
+            }
+            this.product_by_id[product.id] = product;
+            if(product.barcode){
+                this.product_by_barcode[product.barcode] = product;
+            }
+
+            if(product.secondary_barcode){
+                this.product_by_barcode[product.secondary_barcode] = product;
+            }
+        }
     },
 
 
