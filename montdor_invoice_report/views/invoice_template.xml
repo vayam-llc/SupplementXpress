@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="montdor_report_invoice_document">
+            <t t-call="web.external_layout">
+                <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})" />
+                <div class="page">
+                    <div class="row">
+
+                        <div class="col-xs-5" style="float: right;">
+                            <img t-if="res_company.logo" t-att-src="'data:image/png;base64,%s' % to_text(res_company.logo)" style="max-height: 100px;"/>
+                        </div>
+
+                        <div name="invoice_address" class="col-xs-5" style="float: left; margin-top: 10%">
+                                <address t-field="o.partner_id"
+                                    t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}' />
+                                <div t-if="o.partner_id.vat" class="mt16"><t t-esc="o.company_id.country_id.vat_label or 'TIN'"/>: <span t-field="o.partner_id.vat"/></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-5" style="float: right">
+                                <div class="col-xs-4">
+                                    <strong>Source:</strong>
+                                    <t t-if="o.origin">
+                                        <p t-field="o.origin"/>
+                                    </t>
+                                </div>
+                                <div class="col-xs-4">
+                                    <strong>Project:</strong>
+                                    <p/>
+
+                                </div>
+                                <!--<div class="col-xs-4" t-if="o.source_id.project_id">-->
+                                    <!--<strong>Project:</strong>-->
+                                    <!--<p t-field="o.source_id.project_id"/>-->
+                                <!--</div>-->
+                                <div class="col-xs-4" >
+                                    <strong>Date:</strong>
+                                    <t t-if="o.date_invoice">
+                                        <p t-field="o.date_invoice"/>
+                                    </t>
+                                </div>
+                                <br></br>
+                                <div class="col-xs-12">
+                                    <strong>Salesperson:</strong>
+                                    <t t-if="o.user_id">
+                                        <p t-field="o.user_id"/>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="float: left;">
+                            <h4><strong><span>Source</span></strong></h4>
+                        </div>
+                        <div style="float: right;">
+                            <t t-if="o.currency_id">
+                                <strong>
+                                    <p t-field="o.currency_id"/>
+                                </strong>
+                            </t>
+                        </div>
+
+                        <t groups="sale.group_sale_layout" t-foreach="o.order_lines_layouted()" t-as="page" name="lines_layouted">
+                            <table class="table table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th>Quantity</th>
+                                        <th class="text-left">Description</th>
+                                        <th class="text-right">Unit Price</th>
+                                        <th class="text-right">Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="invoice_tbody">
+                                    <t t-foreach="page" t-as="layout_category">
+
+                                        <t t-if="layout_category_size > 1 or page_size > 1" groups="sale.group_sale_layout">
+                                            <tr class="active">
+                                                <td colspan="7" style="font-weight: bold; border-bottom: 1px solid black;">&amp;bull;
+                                                    <t t-esc="layout_category['name']"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+
+                                        <!-- Lines associated -->
+                                        <t t-foreach="layout_category['lines']" t-as="l">
+                                            <tr>
+                                                <td class="text-left">
+                                                    <span t-field="l.quantity"/>
+                                                    <span t-field="l.uom_id"  groups="product.group_uom"/>
+                                                </td>
+                                                <td><span t-field="l.name"/></td>
+                                                <td class="text-right">
+                                                    <span t-field="l.quantity"/> *
+                                                    <span t-field="l.price_unit"/>
+                                                </td>
+
+                                                <td class="text-right" groups="sale.group_show_price_subtotal">
+                                                    <span t-field="l.price_subtotal"
+                                                        t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                                </td>
+                                            </tr>
+                                        </t>
+
+                                        <t t-if="(layout_category_size > 1 or page_size > 1) and layout_category['subtotal']" groups="sale.group_sale_layout">
+                                            <tr class="text-right">
+                                                <td colspan="6">
+                                                    <strong>Subtotal: </strong>
+                                                    <t t-set="subtotal" t-value="sum(line.price_subtotal for line in layout_category['lines'])"/>
+                                                    <span t-esc="subtotal" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </t>
+                                </tbody>
+                            </table>
+
+                            <t t-if="page_index &lt; page_size - 1" groups="sale.group_sale_layout">
+                                <p style="page-break-before:always;"> </p>
+                            </t>
+                        </t>
+
+                        <div class="clearfix">
+                            <div id="total" class="row pull-right">
+                                <div>
+                                    <table class="table-condensed" style="min-width: 250px;max-width: 400px;">
+                                        <tr class="border-black" style="border-bottom:1px solid #dddddd;">
+                                            <td><strong>Subtotal</strong></td>
+                                            <td class="text-right">
+                                                <span t-field="o.amount_untaxed" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                            </td>
+                                        </tr>
+                                        <t t-set="tax_groups_length" t-value="len(o._get_tax_amount_by_group())"/>
+                                        <t t-foreach="o._get_tax_amount_by_group()" t-as="amount_by_group">
+                                            <tr style="border-bottom:1px solid #dddddd;">
+                                                <t t-if="len(o.tax_line_ids) == 1 and o.amount_untaxed == amount_by_group[2]">
+                                                    <td><span t-esc="amount_by_group[0]"/></td>
+                                                    <td class="text-right">
+                                                        <span t-esc="amount_by_group[1]" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                                    </td>
+                                                </t>
+                                                <t t-else="">
+                                                    <td>
+                                                        <span t-esc="amount_by_group[0]"/>
+                                                        <span>&amp;nbsp;<span>on</span>
+                                                            <t t-esc="amount_by_group[2]" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                                        </span>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span t-esc="amount_by_group[1]" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                                    </td>
+                                                </t>
+                                            </tr>
+                                        </t>
+                                        <tr class="border-black">
+                                            <td><strong>Total</strong></td>
+                                            <td class="text-right">
+                                                <span t-field="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p t-if="o.comment">
+                            <span t-field="o.comment"/>
+                        </p>
+                        <p t-if="o.payment_term_id">
+                            <span t-field="o.payment_term_id.note"/>
+                        </p>
+                        <p t-if="o.fiscal_position_id.note">
+                            <span t-field="o.fiscal_position_id.note"/>
+                        </p>
+
+                    </div>
+                </div>
+            </t>
+        </template>
+
+
+
+    <template id="montdor_report_invoice">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="montdor_invoice_report.montdor_report_invoice_document" t-lang="o.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
+    </data>
+</odoo>
