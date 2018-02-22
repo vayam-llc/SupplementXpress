@@ -14,7 +14,7 @@ class ProductTemplate(models.Model):
         help="International Article Number used for product identification.")
 
     _sql_constraints = [
-        ('barcode_uniq', 'unique(secondary_barcode)', _("A barcode can only be assigned to one product !")),
+        ('barcode_secondary_uniq', 'unique(secondary_barcode)', _("A barcode can only be assigned to one product !")),
     ]
 
 
@@ -59,9 +59,9 @@ class Product(models.Model):
         'Barcode', copy=False, oldname='ean13',
         help="International Article Number used for product identification.",related = 'product_tmpl_id.secondary_barcode')
 
-    _sql_constraints = [
-        ('barcode_uniq', 'unique(secondary_barcode)', _("A barcode can only be assigned to one product !")),
-    ]
+    # _sql_constraints = [
+    #     ('barcode_secondary_uniq', 'unique(secondary_barcode)', _("A barcode can only be assigned to one product !")),
+    # ]
 
 
     @api.model
