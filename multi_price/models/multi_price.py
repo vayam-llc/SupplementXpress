@@ -203,3 +203,4 @@ class PosOrder(models.Model):
                 moves.filtered(lambda m: m.product_id.tracking == 'none')._action_done()
 
         return True
+

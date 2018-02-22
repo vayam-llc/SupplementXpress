@@ -146,3 +146,4 @@ _product_search_string: function(product){
 
 
 });
+
