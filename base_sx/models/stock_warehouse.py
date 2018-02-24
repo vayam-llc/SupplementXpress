@@ -9,11 +9,13 @@ class Orderpoint(models.Model):
     _inherit = "stock.warehouse.orderpoint"
 
     past_ninety_sales = fields.Float('90 Days Sales',compute='_compute_values',store=False)
+    past_ninety_sales_value = fields.Float('90 Days Sales ($)',compute='_compute_values',store=False)
     quantity_available = fields.Float('Current Qty',compute='_compute_values',store=False)
     quantity_over = fields.Float('Overstock Qty',compute='_compute_values',store=False)
     avg_daily_sales = fields.Float('Avg. Daily Sales',compute='_compute_values',store=False)
     min_proposed = fields.Float('Minimum Proposed',compute='_compute_values',store=False)
     days_on_hand = fields.Float('Days on Hand',compute='_compute_values',store=False)
+    perc_of_total = fields.Float("Perc of Total",compute='_compute_values',store=False)
     movement_classification = fields.Selection([
         ('a', 'A'),
         ('b', 'B'),
@@ -45,29 +47,43 @@ class Orderpoint(models.Model):
             ('date_done','>=',daysago.strftime('%Y-%m-%d %H:%M:%S')),
             ('date_done','<',now.strftime('%Y-%m-%d %H:%M:%S')),
             ('location_dest_id.usage','=','customer'),
+            ('location_id','=',record.location_id.id),
             ('state','in',['done']),
-            ('product_id','=',record.product_id.id),
             ])
             sales = 0
             sales += sum(moves.mapped('quantity_done'))
             sales_not_location = 0
             sales_not_location += sum(moves_not_location.mapped('quantity_done'))
             record.past_ninety_sales = sales
+            record.past_ninety_sales_value = sales * record.product_id.list_price
             record.avg_daily_sales = sales/N
-            if sales_not_location > 0:
-                if sales/sales_not_location >= 0.95:
-                    record.movement_classification = 'a'
-                    record.min_proposed = 1.64 * record.avg_daily_sales
-                elif sales/sales_not_location >= 0.85:
-                    record.movement_classification = 'b'
-                    record.min_proposed = 1.04 * record.avg_daily_sales
-                elif sales/sales_not_location >= 0.80:
-                    record.movement_classification = 'c'
-                    record.min_proposed = 0.84 * record.avg_daily_sales
-                else:
-                    record.movement_classification = 'd'
-                    record.min_proposed = 0.84 * record.avg_daily_sales
-
+            products_dict = {}
+            for m in moves_not_location:
+                this_product_amount = products_dict.get(m.product_id.id, [0,''])
+                products_dict.update({m.product_id.id: [this_product_amount[0] + m.quantity_done,m.product_id.name]})
+            sorted_products = [ (v,k) for k,v in products_dict.items() ]
+            sorted_products.sort(reverse=True)
+            cumm_amount = 0
+            index = 0
+            for a in sorted_products:
+                index += 1
+                cumm_amount += a[0][0]
+                if a[1] == record.product_id.id and sales_not_location > 0:
+                    percent = round((cumm_amount/sales_not_location),2)
+                    record.perc_of_total = round((sales/sales_not_location),4)*100
+                    if percent <= 0.50 or record.perc_of_total >= 50:
+                        record.movement_classification = 'a'
+                        record.min_proposed = 1.64 * record.avg_daily_sales
+                    elif percent <= 0.75 or record.perc_of_total >= 25:
+                        record.movement_classification = 'b'
+                        record.min_proposed = 1.04 * record.avg_daily_sales
+                    elif percent <= 0.85 or record.perc_of_total >= 10:
+                        record.movement_classification = 'c'
+                        record.min_proposed = 0.84 * record.avg_daily_sales
+                    else:
+                        record.movement_classification = 'd'
+                        record.min_proposed = 0 * record.avg_daily_sales
+                    break
             quants = record.env['stock.quant'].search([
             ('location_id','=',record.location_id.id),
             ('location_id.usage','in',['internal','transit']),

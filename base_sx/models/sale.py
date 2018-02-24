@@ -6,6 +6,19 @@ from odoo.exceptions import UserError
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
+    real_time_margin = fields.Float(string='Order Margin',compute='calculate_real_time_margin',store="True",readonly="True")
+    real_time_margin_perc = fields.Float(string='Order Margin (%)',compute='calculate_real_time_margin',store="True",readonly="True")
+
+    @api.depends('order_line.product_id','order_line.product_uom_qty','order_line.price_unit')
+    def calculate_real_time_margin(self):
+        for record in self:
+            calcmargin = 0
+            for line in record.order_line:
+                calcmargin += line.real_time_margin
+            record.real_time_margin = calcmargin
+            if record.amount_untaxed > 0:
+                record.real_time_margin_perc = round((calcmargin/record.amount_untaxed)*100,2)
+
     @api.multi
     def action_confirm(self):
         if self.partner_id.credit_limit > 0:
@@ -21,6 +34,19 @@ class SaleOrder(models.Model):
             if self.env['ir.config_parameter'].sudo().get_param('sale.auto_done_setting'):
                 self.action_done()
             return True
+
+class SaleOrderLine(models.Model):
+    _inherit = "sale.order.line"
+
+    real_time_margin = fields.Float(string='Margin',compute='calculate_real_time_margin',store="True",readonly="True")
+    real_time_margin_perc = fields.Float(string='Margin (%)',compute='calculate_real_time_margin',store="True",readonly="True")
+
+    @api.depends('product_id','product_uom_qty','price_unit')
+    def calculate_real_time_margin(self):
+        for record in self:
+            record.real_time_margin = (record.price_unit - record.product_id.standard_price)*record.product_uom_qty
+            if record.price_unit > 0:
+                record.real_time_margin_perc = round(((record.price_unit - record.product_id.standard_price)/record.price_unit)*100,2)
 
 class SaleOrderCreditLimitWizard(models.TransientModel):
     _name = "sale.order.credit.limit.wizard"

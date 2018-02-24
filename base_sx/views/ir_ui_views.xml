@@ -31,6 +31,27 @@
                <field name="credit"/>
                <field name="credit_limit"/>
           </xpath>
+          <xpath expr="//group[@name='sale']" position="inside">
+            <field name="manufacture_price"/>
+            <field name="vip_price"/>
+          </xpath>
+        </data>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="view_order_form_mod">
+      <field name="name">x_vayam.sale.order.form.mod</field>
+      <field name="model">sale.order</field>
+      <field name="inherit_id" ref="sale.view_order_form"/>
+      <field name="priority">99</field>
+      <field name="arch" type="xml">
+        <data>
+          <xpath expr="//field[@name='order_line']//tree//field[@name='price_unit']" position="after">
+               <field name="real_time_margin_perc"/>
+          </xpath>
+          <xpath expr="//field[@name='amount_total']" position="after">
+            <field name="real_time_margin" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+            <field name="real_time_margin_perc" />
+          </xpath>
         </data>
       </field>
     </record>
@@ -127,6 +148,8 @@
               <field name="quantity_over"/>
               <field name="location_id"/>
               <field name="past_ninety_sales"/>
+              <field name="perc_of_total"/>
+              <field name="past_ninety_sales_value"/>
               <field name="avg_daily_sales"/>
               <field name="days_on_hand"/>
               <field name="movement_classification"/>
