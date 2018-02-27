@@ -3,6 +3,7 @@ import re
 from odoo.osv import expression
 from odoo.tools import float_is_zero
 
+
 class ProductTemplate(models.Model):
 
     _inherit = 'product.template'
@@ -45,6 +46,7 @@ class SaleOrderLine(models.Model):
                 self.price_unit = self.product_id.secondary_price
             else:
                 self.price_unit = self.env['account.tax']._fix_tax_included_price(self._get_display_price(product), product.taxes_id, self.tax_id)
+
 
 
 class Product(models.Model):
@@ -108,11 +110,14 @@ class Product(models.Model):
         return products.name_get()
 
 
+
 class PosOrderLine(models.Model):
 
     _inherit = 'pos.order.line'
 
     secondary = fields.Boolean('Is Secondary UOM')
+
+
 
 class PosOrder(models.Model):
 

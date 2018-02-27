@@ -2,6 +2,9 @@ odoo.define('multi_price.db', function (require) {
 "use strict";
 
 var PosDB = require('point_of_sale.DB');
+var models = require('point_of_sale.models');
+var chrome = require('point_of_sale.chrome');
+
 
 PosDB.include({
 
@@ -69,6 +72,10 @@ _product_search_string: function(product){
             if(product.secondary_barcode){
                 this.product_by_barcode[product.secondary_barcode] = product;
             }
+//            if (product.secondary_price){
+//                 self.pos.get_order().get_selected_orderline().set_unit_price(self.pos.get_order().get_selected_orderline().get_product().secondary_price);
+//            }
+
         }
     },
 
