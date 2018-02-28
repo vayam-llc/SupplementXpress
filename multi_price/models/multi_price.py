@@ -42,7 +42,9 @@ class SaleOrderLine(models.Model):
             )
 
             # multi_price = self.env['product.product'].search([('secondary_uom_id','=',self.product_id.product_tmpl_id.id),('uom_id','=',self.product_uom.id)])
-            if self.product_uom.id == self.product_id.uom_id.id:
+            if self.product_uom.id == self.product_id.product_tmpl_id.uom_id.id:
+                self.price_unit = self.product_id.product_tmpl_id.lst_price
+            elif self.product_uom.id == self.product_id.secondary_uom_id.id:
                 self.price_unit = self.product_id.secondary_price
             else:
                 self.price_unit = self.env['account.tax']._fix_tax_included_price(self._get_display_price(product), product.taxes_id, self.tax_id)
@@ -54,12 +56,12 @@ class Product(models.Model):
     _inherit = 'product.product'
 
 
-    secondary_uom_id = fields.Many2one('product.uom',string="Secondary Unit Of Measure",related = 'product_tmpl_id.secondary_uom_id')
-    secondary_price = fields.Float('Price',related='product_tmpl_id.secondary_price')
+    secondary_uom_id = fields.Many2one('product.uom',string="Secondary Unit Of Measure",)
+    secondary_price = fields.Float('Price',)
     secondary = fields.Boolean()
     secondary_barcode = fields.Char(
         'Barcode', copy=False, oldname='ean13',
-        help="International Article Number used for product identification.",related = 'product_tmpl_id.secondary_barcode')
+        help="International Article Number used for product identification.",)
 
     # _sql_constraints = [
     #     ('barcode_secondary_uniq', 'unique(secondary_barcode)', _("A barcode can only be assigned to one product !")),
