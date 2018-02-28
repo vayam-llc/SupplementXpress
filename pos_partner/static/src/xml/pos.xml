@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-extend="ClientDetailsEdit">
+        <t t-jquery=".client-details-left" t-operation="append">
+
+            <div class='client-detail'>
+                <span class='label'>Customer Type</span>
+
+                    <select class='detail client-customer_type needsclick' name='customer_type'>
+                            <option value=''>None</option>
+                            <t t-foreach='widget.pos.partner_customer_type' t-as='customertype'>
+                                <option t-att-value='customertype.id'
+                                        t-att-selected="partner.customer_type ? (customertype.id === partner.customer_type[0] ? true : undefined) : undefined">
+                                    <t t-esc='customertype.name'/>
+                                </option>
+                            </t>
+                    </select>
+
+            </div>
+        </t>
+    </t>
+
+    <t t-extend="ClientDetails">
+        <t t-jquery=".client-details-left" t-operation="append">
+
+            <div class='client-detail'>
+                <span class='label'>Customer Type</span>
+                <t t-if='partner.customer_type'>
+                    <span class='detail client-customer_type'><t t-esc='partner.customer_type[1]'/></span>
+                </t>
+                <t t-if='!partner.customer_type'>
+                    <span class='detail client-customer_type empty'>N/A</span>
+                </t>
+            </div>
+
+        </t>
+    </t>
+
+
+</templates>
