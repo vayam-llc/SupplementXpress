@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+
+        <record model="ir.ui.view" id="product_template_form_inherit">
+            <field name="name">Product Template Form inherited</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//page[@name='general_information']" position="after">
+                        <page string="Secondary UOM">
+                            <group>
+                                <group>
+                                    <field name="secondary_uom_id"/>
+                                    <field name="secondary_price" />
+                                    <field name="secondary_barcode" />
+                                </group>
+                            </group>
+                        </page>
+                 </xpath>
+            </field>
+        </record>
+
+        <record id="multi_price_product_variant_edit_view_inherit" model="ir.ui.view">
+            <field name="name">product.product.product.view.form.easy.inherit</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_variant_easy_edit_view"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//group[4]/group[@name='weight']" position="after">
+
+                    <group name="secondary_uom" string="Secondary UOM">
+                        <field name="secondary_uom_id"/>
+                        <field name="secondary_price" />
+                        <field name="secondary_barcode" />
+                    </group>
+
+                </xpath>
+
+            </field>
+        </record>
+
+
+
+    </data>
+</openerp>
+

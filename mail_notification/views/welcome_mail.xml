@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!--chron for sending mail to the customer, 24 hours after the customer creation -->
+
+        <record forcecreate="True" id="ir_cron_customer_notification" model="ir.cron">
+            <field name="name">Customer Notification</field>
+            <field name="model_id" ref="model_res_partner"/>
+            <field name="state">code</field>
+            <field name="code">model.customer_notification()</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">24</field>
+            <field name="interval_type">hours</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+        </record>
+
+        <!--chron for sending mail to the customer 24 DAYS after the last purchase-->
+
+        <record forcecreate="True" id="ir_cron_customer_purchase_notification_24" model="ir.cron">
+            <field name="name">Customer purchase notification 24</field>
+            <field name="model_id" ref="model_sale_order"/>
+            <field name="state">code</field>
+            <field name="code">model.customer_purchase_notification_24()</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+        </record>
+
+         <!--chron for sending mail to the customer 32 DAYS after the last purchase-->
+
+        <record forcecreate="True" id="ir_cron_customer_purchase_notification_32" model="ir.cron">
+            <field name="name">Customer purchase notification 32</field>
+            <field name="model_id" ref="model_sale_order"/>
+            <field name="state">code</field>
+            <field name="code">model.customer_purchase_notification_32()</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+        </record>
+
+         <!--chron for sending mail to the customer 60 DAYS after the last purchase-->
+
+        <record forcecreate="True" id="ir_cron_customer_purchase_notification_60" model="ir.cron">
+            <field name="name">Customer purchase notification 60</field>
+            <field name="model_id" ref="model_sale_order"/>
+            <field name="state">code</field>
+            <field name="code">model.customer_purchase_notification_60()</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+        </record>
+
+        <!--template for sending mail after creating a customer-->
+        
+        <record id="email_template_customer_welcome" model="mail.template">
+            <field name="name">welcome email</field>
+            <field name="subject">New Customer created ${object.name}</field>
+            <field name="email_from">${user.email}</field>
+            <field name="email_to">${object.email}</field>
+            <field name="lang">${user.lang}</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" ><![CDATA[welcome email]]></field>
+        </record>
+
+        <!--template for sending mail to the customer, 24 hours after the customer creation-->
+
+        <record id="email_template_customer_day_notification" model="mail.template">
+            <field name="name">notification email</field>
+            <field name="subject">Customer created 24 hours ago${object.name}</field>
+            <field name="email_from">${user.email}</field>
+            <field name="email_to">${object.email}</field>
+            <field name="lang">${user.lang}</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" ><![CDATA[Customer created 24 hours ago]]></field>
+        </record>
+
+        <!--template for sending mail to the customer, if the purchase diffrence is more than 24 days -->
+
+         <record id="email_template_last_purachse_24" model="mail.template">
+            <field name="name">purchase notification email(24 days)</field>
+            <field name="subject">Customer purchased more than 24 days ago</field>
+            <field name="email_from">${user.email}</field>
+            <field name="email_to">${object.email}</field>
+            <field name="lang">${user.lang}</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" ><![CDATA[Hello,your's last purchased was mopre than 24 days ago!!!1]]></field>
+        </record>
+
+        <!--template for sending mail to the customer, if the purchase diffrence is more than 32 days -->
+
+         <record id="email_template_last_purachse_32" model="mail.template">
+            <field name="name">purchase notification email(32 days)</field>
+            <field name="subject">Customer purchased more than 24 days ago</field>
+            <field name="email_from">${user.email}</field>
+            <field name="email_to">${object.email}</field>
+            <field name="lang">${user.lang}</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" ><![CDATA[Hello,your's last purchased was mopre than 32 days ago!!!]]></field>
+        </record>
+
+        <!--template for sending mail to the customer, if the purchase diffrence is more than 60 days -->
+
+         <record id="email_template_last_purachse_60" model="mail.template">
+            <field name="name">purchase notification email(60 days)</field>
+            <field name="subject">Customer purchased more than 60 days ago</field>
+            <field name="email_from">${user.email}</field>
+            <field name="email_to">${object.email}</field>
+            <field name="lang">${user.lang}</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" ><![CDATA[Hello,your's last purchased was mopre than 60 days ago!!!]]></field>
+        </record>
+
+
+    </data>
+</odoo>
+
+
