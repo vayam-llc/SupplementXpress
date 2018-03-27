@@ -120,7 +120,7 @@ class StockMovementWizard(models.TransientModel):
     def _apply_domain_on_locations(self):
         for record in self:
             locations = record.orderpoint_ids.mapped('location_id').ids
-            action = {'domain': {'location_dest_id': [('id', 'in', locations)],'location_id': [('id', 'in', locations)]}}
+            action = {'domain': {'location_dest_id': [('usage', '=', 'internal')],'location_id': [('usage', '=', 'internal')]}}
             return action
 
     @api.onchange('location_id')
