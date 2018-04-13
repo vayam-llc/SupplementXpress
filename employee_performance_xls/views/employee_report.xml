@@ -37,6 +37,7 @@
             <field name="view_mode">form</field>
             <field name="target">new</field>
         </record>
-        <menuitem id="account_report_employee_xls" name="Employee Performance Report" parent="purchase_xls_report.account_report_xls" action="action_account_xls_employee_report"/>
+        <menuitem id="account_report_xls" name="XLS Report" parent="account.menu_finance_reports" action=""/>
+        <menuitem id="account_report_employee_xls" name="Employee Performance Report" parent="account_report_xls" action="action_account_xls_employee_report"/>
     </data>
 </odoo>
