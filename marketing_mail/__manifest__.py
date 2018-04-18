@@ -6,7 +6,7 @@
     """,
 
     'author': "sigb",
-    'depends': ['mail','base','sale','fetchmail'],
+    'depends': ['mail','base','sale','fetchmail','website_sale'],
     'data': [
         'views/product_mail_notification.xml',
         'wizard/marketing_notification.xml'
