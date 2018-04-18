@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="purchase_form" model="ir.ui.view">
+                <field name="name">purchase.category.form</field>
+                <field name="model">purchase.category</field>
+                <field name="arch" type="xml">
+                    <form>
+                        <sheet>
+                            <div class="oe_title">
+                                <h1>
+                                    <field name="name" readonly="1"/>
+                                </h1>
+                            </div>
+                            <group>
+                                <field name="min_qty" string="Minimum quantity"/>
+                                <field name="max_qty" string="Maximum quantity"/>
+                            </group>
+                        </sheet>
+                    </form>
+                </field>
+        </record>
+
+        <record id="purchase_category_tree" model="ir.ui.view">
+               <field name="name">purchse.category.tree</field>
+               <field name="model">purchase.category</field>
+               <field name="arch" type="xml">
+                       <tree>
+                           <field name="name"/>
+                           <field name="min_qty"/>
+                           <field name="max_qty"/>
+                       </tree>
+               </field>
+        </record>
+
+        <record id="product_category_form" model="ir.actions.act_window">
+                <field name="name">Product category</field>
+                <field name="type">ir.actions.act_window</field>
+                <field name="res_model">purchase.category</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id='purchase_category_form' model="ir.ui.view">
+                <field name="name">Product Template form</field>
+                <field name="model">product.template</field>
+                <field name="inherit_id" ref="product.product_template_form_view"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//field[@name='type']" position="after">
+                        <field name="purchase_category" string="Purchase category"/>
+                    </xpath>
+                </field>
+        </record>
+
+        <record id="view_purchase_form" model="ir.ui.view">
+                <field name="name">Purchase order line</field>
+                <field name="model">purchase.order</field>
+                <field name="inherit_id" ref="purchase.purchase_order_form"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//field[@name='product_qty']" position="before">
+                        <field name="purchase_category" string="Purchase category"/>
+                    </xpath>
+                </field>
+        </record>
+
+        <record id="view_warehouse_orderpoint_form_inherit" model="ir.ui.view">
+                <field name="name">stock warehouse orderpoint form inherit</field>
+                <field name="model">stock.warehouse.orderpoint</field>
+                <field name="inherit_id" ref="stock.view_warehouse_orderpoint_form"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//field[@name='qty_multiple']" position="after">
+                        <field name="category_check" invisible="1"/>
+                        <field name="purchase_category" attrs="{'invisible': [('category_check','=', False)]}" string="Quantity multiple"/>
+                    </xpath>
+                    <xpath expr="//field[@name='qty_multiple']" position="attributes">
+                        <attribute name="attrs">{'invisible': [('category_check','=',True)]}</attribute>
+                    </xpath>
+                </field>
+        </record>
+
+
+
+        <menuitem id="menu_purchase_category" name="Purchase category" parent="purchase.menu_procurement_management" sequence="3" action="product_category_form"/>
+
+    </data>
+</odoo>
