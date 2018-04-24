@@ -13,5 +13,4 @@
         'views/templates.xml',
 
     ],
-    'application': True,
 }
