@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<record id="menu_location" model="website.menu">
+            <field name="name">Location</field>
+            <field name="url">/location</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence" type="int">50</field>
+            <field name="website_id" ref="website.default_website"/>
+        </record>
+    <record id="location" model="ir.ui.view">
+            <field name="name">Location</field>
+            <field name="type">qweb</field>
+            <field name="key">website.location</field>
+            <field name="arch" type="xml">
+                <t name="Locations" t-name="website.location">
+                    <t t-call="website.layout">
+                        <div id="wrap" class="oe_structure oe_empty" style="height:100%;background-image:url('/website_location/static/src/img/everystockphoto.jpg');">
+
+                             <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBtiM0qfo98iXWJdNuTnwl3Lc_Q69elfbk"/>
+                            <script>
+                                    function initialize() {
+                                            var uluru = {lat:31.817543, lng:-106.514296};
+                             var map = new google.maps.Map(document.getElementById('googleMap'), {
+                             zoom: 8,
+                            center: uluru
+                              });
+
+                          var contentString = 'SX MESA';
+
+                      var infowindow = new google.maps.InfoWindow({
+                        content: contentString
+                      });
+
+                    var marker = new google.maps.Marker({
+                    position: uluru,
+                    map: map,
+                    title: 'Uluru (Ayers Rock)'
+                          });
+                      marker.addListener('click', function() {
+                        infowindow.open(map, marker);
+                          });
+                                        }
+
+                                       google.maps.event.addDomListener(window, 'load', initialize);
+                              </script>
+
+                              <div class="row">
+                                  <div class="col-sm-3 col-xs-12" style="margin-bottom:40px;">
+                                      <div class="row">
+                            <div class="col-xs-12" id="googleMap" style="height:250px;">
+
+                            </div>
+                            </div>
+                            <div class="col-xs-12">
+                            <span style="color:#8bc53e">SX MESA
+                5360 N Mesa St #15, El Paso, TX 79912
+                (915) 838.1679</span>
+                            </div>
+                           </div>
+
+                             <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBtiM0qfo98iXWJdNuTnwl3Lc_Q69elfbk"/>
+                            <script>
+                                    function initialize() {
+                                            var uluru = {lat: 31.862502, lng: -106.558637};
+                             var map = new google.maps.Map(document.getElementById('googleMap1'), {
+                             zoom: 8,
+                            center: uluru
+                              });
+
+                          var contentString = 'SX RESLER';
+
+                      var infowindow = new google.maps.InfoWindow({
+                        content: contentString
+                      });
+
+                    var marker = new google.maps.Marker({
+                    position: uluru,
+                    map: map,
+                    title: 'Uluru (Ayers Rock)'
+                          });
+                      marker.addListener('click', function() {
+                        infowindow.open(map, marker);
+                          });
+                                        }
+
+                                       google.maps.event.addDomListener(window, 'load', initialize);
+                              </script>
+                            <div class="col-sm-3 col-sm-offset-1 col-xs-12" style="margin-bottom:40px;">
+                                      <div class="row">
+                            <div class="col-xs-12" id="googleMap1" style="height:250px;">
+
+                            </div>
+                            </div>
+                            <div class="col-xs-12">
+                            <span style="color:#8bc53e">SX RESLER
+                965 N Resler Dr #108, El Paso, TX 79912
+                (915) 581.6185</span>
+                            </div>
+                           </div>
+
+                             <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBtiM0qfo98iXWJdNuTnwl3Lc_Q69elfbk"/>
+                            <script>
+                                    function initialize() {
+                                            var uluru = {lat: 31.748057, lng: -106.319385};
+                             var map = new google.maps.Map(document.getElementById('googleMap2'), {
+                             zoom: 8,
+                            center: uluru
+                              });
+
+                          var contentString = 'SX LEE TREVINO';
+
+                      var infowindow = new google.maps.InfoWindow({
+                        content: contentString
+                      });
+
+                    var marker = new google.maps.Marker({
+                    position: uluru,
+                    map: map,
+                    title: 'Uluru (Ayers Rock)'
+                          });
+                      marker.addListener('click', function() {
+                        infowindow.open(map, marker);
+                          });
+                                        }
+
+                                       google.maps.event.addDomListener(window, 'load', initialize);
+                              </script>
+                            <div class="col-sm-3 col-sm-offset-1 col-xs-12" style="margin-bottom:40px;">
+                                      <div class="row">
+                            <div class="col-xs-12" id="googleMap2" style="height:250px;">
+
+                            </div>
+                            </div>
+                            <div class="col-xs-12">
+                            <span style="color:#8bc53e">SX LEE TREVINO
+                1443 Lee Trevino Dr #5, El Paso, TX 79936
+                (915) 626.5243</span>
+                            </div>
+                           </div>
+
+                            <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBtiM0qfo98iXWJdNuTnwl3Lc_Q69elfbk"/>
+                            <script>
+                                    function initialize() {
+                                            var uluru = {lat: 31.761413, lng: -106.270780};
+                             var map = new google.maps.Map(document.getElementById('googleMap3'), {
+                             zoom: 8,
+                            center: uluru
+                              });
+
+                          var contentString = 'SX MONTWOO';
+
+                      var infowindow = new google.maps.InfoWindow({
+                        content: contentString
+                      });
+
+                    var marker = new google.maps.Marker({
+                    position: uluru,
+                    map: map,
+                    title: 'Uluru (Ayers Rock)'
+                          });
+                      marker.addListener('click', function() {
+                        infowindow.open(map, marker);
+                          });
+                                        }
+
+                                       google.maps.event.addDomListener(window, 'load', initialize);
+                              </script>
+                              </div>
+                              <div class="row">
+                              <div class="col-sm-3 col-xs-12" style="margin-bottom:40px;">
+                                      <div class="row">
+                            <div class="col-xs-12" id="googleMap3" style="height:250px;">
+
+                            </div>
+                            </div>
+                            <div class="col-xs-12">
+                            <span style="color:#8bc53e">SX MONTWOOD
+                12135 Montwood Dr #113, El Paso, TX 79936
+                (915) 855.3868</span>
+                            </div>
+                           </div>
+
+
+                              <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBtiM0qfo98iXWJdNuTnwl3Lc_Q69elfbk"/>
+                            <script>
+                                    function initialize() {
+                                            var uluru = {lat: 31.925508, lng: -106.438890};
+                             var map = new google.maps.Map(document.getElementById('googleMap4'), {
+                             zoom: 8,
+                            center: uluru
+                              });
+
+                          var contentString = 'SX NORTH HILLS CROSSING';
+
+                      var infowindow = new google.maps.InfoWindow({
+                        content: contentString
+                      });
+
+                    var marker = new google.maps.Marker({
+                    position: uluru,
+                    map: map,
+                    title: 'Uluru (Ayers Rock)'
+                          });
+                      marker.addListener('click', function() {
+                        infowindow.open(map, marker);
+                          });
+                                        }
+
+                                       google.maps.event.addDomListener(window, 'load', initialize);
+                              </script>
+                                <div class="col-sm-3 col-sm-offset-1 col-xs-12" style="margin-bottom:40px;">
+                                      <div class="row">
+                            <div class="col-xs-12" id="googleMap4" style="height:250px;">
+
+                            </div>
+                            </div>
+                            <div class="col-xs-12">
+                            <span style="color:#8bc53e">SX NORTH HILLS CROSSING
+                10771 Gateway S Blvd, El Paso, TX 79934
+                (915) 581-2110</span>
+                            </div>
+                           </div>
+
+                            </div>
+                              <div class="col-sm-3 col-sm-offset-1 col-xs-12"/>
+
+
+                            </div>
+
+                    </t>
+                </t>
+            </field>
+        </record>
+        <record id="location_page" model="website.page">
+            <field name="url">/location</field>
+            <field name="website_published">True</field>
+            <field name="view_id" ref="location" />
+        </record>
+         <record id="menu_location" model="website.menu">
+            <field name="page_id" ref="location_page" />
+        </record>
+</odoo>
