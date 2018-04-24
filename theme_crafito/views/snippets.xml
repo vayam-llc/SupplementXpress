@@ -4963,21 +4963,4 @@
                 </div>
             </xpath>
         </template>
-<template id="user_invalid">
-            <t t-call="website.layout">
-                <div id="wrap">
-                    <div class="oe_structure">
-                        <section>
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <h2>You are not authorized to access this page</h2>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                </div>
-            </t>
-        </template>
 </odoo>
