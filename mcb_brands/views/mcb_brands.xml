@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="inherit_form_mcb_product_brand" model="ir.ui.view">
+                <field name="model">product.brand</field>
+                <field name="inherit_id" ref="product_brand.view_product_brand_form"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//form//sheet" position="inside">
+                        <field name="is_mcb" nolabel="1"/>
+                        <label for="is_mcb"/>
+                        <notebook>
+                               <page attrs="{'invisible':[('is_mcb','!=',True)]}" name="product mcb" string="MCB">
+                                    <field name="mcb"  nolabel="1">
+                                           <tree editable="bottom">
+                                                <field name="tier"/>
+                                                <field name="rebate"/>
+                                                <field name="amount"/>
+                                           </tree>
+                                    </field>
+                               </page>
+                        </notebook>
+                    </xpath>
+                </field>
+        </record>
+    </data>
+</odoo>
