@@ -9,6 +9,7 @@ var chrome = require('point_of_sale.chrome');
 
 var _super_posmodel = models.PosModel.prototype;
 
+    //Appending the new customer type model to pos models
     models.load_models([{
         model: 'customer.type',
         condition: function(self){ return true; },
@@ -24,12 +25,12 @@ var _super_posmodel = models.PosModel.prototype;
         },}], { 'after': 'product.uom' });
 
 
+    //Pushed customer type field to pos
 
     models.PosModel = models.PosModel.extend({
         initialize: function (session, attributes) {
-            var partner_model = _.find(this.models, function(model){ return model.model === 'res.partner'; });
+            var partner_model = _.find(this.models, function(model){ return model.model == 'res.partner'; });
             partner_model.fields.push('customer_type');
-
             return _super_posmodel.initialize.call(this, session, attributes);
         },
     });

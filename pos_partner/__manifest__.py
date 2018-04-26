@@ -2,6 +2,7 @@
 {
     'name': 'Pos Partner customization',
     'summary': 'Customization in POS Partner',
+    'author': 'Sarga Babu',
     'version': '11.0.1.0',
     'category': 'POS',
     'author': "Sigb",
