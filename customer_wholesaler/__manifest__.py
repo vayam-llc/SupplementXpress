@@ -1,7 +1,7 @@
 
 {
     'name': 'wholesale customer',
-    'category': 'sale',
+    'category': 'sale mangement',
     'version': '1.0',
     'author':'sigb',
     'description': "Set a customer as wholesaler",
