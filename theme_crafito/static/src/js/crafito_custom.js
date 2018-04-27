@@ -54,7 +54,10 @@ odoo.define('theme_crafito.crafito_custom_js', function(require) {
                 });
             });
         }
-
+    $("header .carousel-inner .item").css("background-size", "contain");
+    var width = $("header .carousel-inner .carousel-inner").width();
+    height = width * (507 / 1304);
+    $("header .carousel-inner .carousel-inner").css("height", height);
         // Fix edit bar when logined
         if ($('nav#oe_main_menu_navbar').length) {
             $('header').css({'top': '34px'});
