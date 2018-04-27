@@ -13,6 +13,10 @@ odoo.define('theme_crafito.crafito_custom_js', function(require) {
     });
 
     $(document).ready(function($) {
+        $("header .carousel-inner .item").css("background-size", "contain");
+    var width = $("header .carousel-inner .carousel-inner").width();
+    height = width * (507 / 1304);
+    $("header .carousel-inner .carousel-inner").css("height", height);
         $("ul.o_menu_sections > li.content").addClass("custom_padding_topmenu_content");
         // browser window scroll (in pixels) after which the "back to top" link is shown
         var offset = 300,
@@ -54,10 +58,7 @@ odoo.define('theme_crafito.crafito_custom_js', function(require) {
                 });
             });
         }
-    $("header .carousel-inner .item").css("background-size", "contain");
-    var width = $("header .carousel-inner .carousel-inner").width();
-    height = width * (507 / 1304);
-    $("header .carousel-inner .carousel-inner").css("height", height);
+
         // Fix edit bar when logined
         if ($('nav#oe_main_menu_navbar').length) {
             $('header').css({'top': '34px'});
