@@ -163,12 +163,17 @@ header {
 		padding: 25px 0;
 		position: relative;
 		z-index: 1;
+		@media(max-width: 768px){
+        padding: 0px 0px !important;
+        }
 		.logo{
 			float: left;
 			@media(max-width: 767px){
 				width:100%;
 				text-align: center;
 				padding-bottom: 20px;
+				float: none !important;
+                margin: 0 auto;
 			}
 			h1{
 				font-size: 12px;
