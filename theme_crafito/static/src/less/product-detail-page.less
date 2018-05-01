@@ -969,7 +969,7 @@
 	.pwp-img{
 		>a {
 			img {
-				margin: 0 auto;
+				margin: 30% auto;
 				@media (max-width:1000px) {
 					width: auto;
 				}
@@ -1182,8 +1182,9 @@
 		margin: 0;
 	}	
 	.list-items{
-		width: 70% !important;
-		margin-bottom: 25px;
+	    @media(min-width: 600px){
+		width: 55% !important;
+		}
 		border: 1px solid darken(@light-color, 12.5%);
 		padding: 0;
 		
@@ -1221,9 +1222,9 @@
 				}
 			}
 			.pwp-info{
-				width: 70%;
+				width: 50%;
 				float: left;
-				padding: 20px; 
+
 				@media(max-width: 991px){
 					width:60%;
 					padding: 15px; 
@@ -1469,6 +1470,8 @@
 						margin-bottom: 15px;
 						border: 1px solid @theme;
 						border-radius: 2px;
+						max-width: 125px !important;
+
 
 						.input-group-addon {
 							background-color: @theme;

@@ -13,6 +13,16 @@ odoo.define('theme_crafito.crafito_custom_js', function(require) {
     });
 
     $(document).ready(function($) {
+        $("main .carousel-inner .item").css("background-size", "contain");
+    var width = $("main  .carousel-inner").eq(0).width();
+    var height = width * (507 / 1304);
+    $("main .carousel-inner"). eq(0).css("height", height);
+    $(window).on('resize', function(){
+     $("main .carousel-inner .item").css("background-size", "contain");
+    var width = $("main  .carousel-inner"). eq(0).width();
+     var height = width * (507 / 1304);
+    $("main .carousel-inner"). eq(0).css("height", height);
+    });
         $("ul.o_menu_sections > li.content").addClass("custom_padding_topmenu_content");
         // browser window scroll (in pixels) after which the "back to top" link is shown
         var offset = 300,
