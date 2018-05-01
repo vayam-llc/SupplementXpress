@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="inherit_form_mcb_product_brands" model="ir.ui.view">
+                <field name="model">product.brand</field>
+                <field name="inherit_id" ref="product_brand.view_product_brand_form"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//form//field[@name='partner_id']" position="after">
+                        <div>
+                            <field name="is_pl" nolabel="1"/>
+                            <label for="is_pl"/>
+                        </div>
+                    </xpath>
+                </field>
+        </record>
+    </data>
+</odoo>

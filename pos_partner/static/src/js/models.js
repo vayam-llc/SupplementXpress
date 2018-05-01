@@ -25,16 +25,17 @@ var _super_posmodel = models.PosModel.prototype;
         },}], { 'after': 'product.uom' });
 
 
-    //Pushed customer type field to pos
+    //Pushed customer type field to pos res partner and pricelist
 
     models.PosModel = models.PosModel.extend({
         initialize: function (session, attributes) {
             var partner_model = _.find(this.models, function(model){ return model.model == 'res.partner'; });
             partner_model.fields.push('customer_type');
+            var pricelist_model = _.find(this.models, function(model){ return model.model == 'product.pricelist'; });
+            pricelist_model.fields.push('customer_type');
             return _super_posmodel.initialize.call(this, session, attributes);
         },
     });
-
 
 });
 

@@ -7,7 +7,7 @@
             <div class='client-detail'>
                 <span class='label'>Customer Type</span>
 
-                    <select class='detail client-customer_type needsclick' name='customer_type'>
+                    <select class='detail client-customer_type needsclick' name='customer_type' id ="customer_type">
                             <option value=''>None</option>
                             <t t-foreach='widget.pos.partner_customer_type' t-as='customertype'>
                                 <option t-att-value='customertype.id'
