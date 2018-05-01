@@ -173,17 +173,13 @@
 
 
                 <div class="header-middle">
-                    <div class="row">
-                        <div class="col-xs-3 col-sm-4" >
-                            <div class="row">
-                            <div class="col-sm-10 col-md-9 pull-left" >
+                    <div class="container" style="width:100%;">
+                        <div class="logo" >
                             <h4>
                                 <a class="navbar-brand" href="/" t-if="website" t-field="website.name">SX</a>
-                            </h4>  
-                            </div>
-                            </div>                         
+                            </h4>                           
                         </div>
-                        <div class="col-xs-9 col-sm-7 col-md-5" style="float:right !important;">
+                        <div class="logo" style="width:320px;float:right !important;">
                         <div  style="float:left;min-width:200px;" class="header-search" >
                             <form action="/shop" method="get">
                                 <t t-set="search_text" t-value="search"/>
