@@ -43,7 +43,9 @@ class SaleOrderLine(models.Model):
 
             # multi_price = self.env['product.product'].search([('secondary_uom_id','=',self.product_id.product_tmpl_id.id),('uom_id','=',self.product_uom.id)])
             if self.product_uom.id == self.product_id.product_tmpl_id.uom_id.id:
-                self.price_unit = self.product_id.product_tmpl_id.lst_price
+                # self.price_unit = self.product_id.product_tmpl_id.lst_price
+                self.price_unit = self.env['account.tax']._fix_tax_included_price_company(
+                    self._get_display_price(product), product.taxes_id, self.tax_id, self.company_id)
             elif self.product_uom.id == self.product_id.secondary_uom_id.id:
                 self.price_unit = self.product_id.secondary_price
             else:
