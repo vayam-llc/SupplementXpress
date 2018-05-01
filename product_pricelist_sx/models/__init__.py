@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-import pricelist
-import partner
-import product
+from . import pricelist
+from . import partner
+from . import product
