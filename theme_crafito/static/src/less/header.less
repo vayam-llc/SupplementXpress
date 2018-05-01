@@ -166,6 +166,12 @@ header {
 		@media(max-width: 768px){
         padding: 0px 0px !important;
         }
+        .container{
+        @media(max-width: 768px){
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+        }
+        }
 		.logo{
 			float: left;
 			@media(max-width: 767px){
@@ -239,7 +245,11 @@ header {
 						position: relative;
 						display: inline-block;
 						.fa{
+
 							font-size: 40px;
+							@media(max-width: 600px){
+                            font-size: 30px;
+                            }
 						}
 						.theme_crafito_cart_quantity, 
 						.theme_crafito_wish_quantity{
