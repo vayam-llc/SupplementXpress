@@ -166,14 +166,19 @@ header {
 		@media(max-width: 768px){
         padding: 0px 0px !important;
         }
+        .container{
+        @media(max-width: 768px){
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+        }
+        }
 		.logo{
 			float: left;
 			@media(max-width: 767px){
-				width:100%;
+				width:70%;
 				text-align: center;
 				padding-bottom: 20px;
-				float: none !important;
-                margin: 0 auto;
+				padding-left: 7px !important;
 			}
 			h1{
 				font-size: 12px;
@@ -226,14 +231,18 @@ header {
 				}
 			}
 		}
+
+		.top-right{
+		@media(max-width: 600px){
+				font-size:12px;
+			}
+
+		}
+
 		.h-cart{
-			width: 10%;
 			float: left;
 			text-align: right;
 			padding: 5px 0;
-			@media(max-width: 767px){
-				width: 20%;
-			}
 			> ul{
 				margin: 0;
 				padding: 0;
@@ -245,7 +254,11 @@ header {
 						position: relative;
 						display: inline-block;
 						.fa{
+
 							font-size: 40px;
+							@media(max-width: 600px){
+                            font-size: 30px;
+                            }
 						}
 						.theme_crafito_cart_quantity, 
 						.theme_crafito_wish_quantity{
