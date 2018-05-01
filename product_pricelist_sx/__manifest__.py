@@ -12,7 +12,7 @@
     """,
     'depends': ['base_sx', 'sale', 'pos_partner', 'product'],
     'data': [
-        # 'views/pricelist_view.xml',
+        'views/pricelist_view.xml',
         'views/products_view.xml',
     ],
     'demo': [
