@@ -10,7 +10,7 @@
     Module helps the user to add both whole sale, retail price for all products and helps in taking appropriate price and pricelist
     for a product based on the customer.
     """,
-    'depends': ['base_sx', 'sale', 'pos_partner', 'product'],
+    'depends': ['base_sx', 'sale', 'pos_partner', 'product', 'product_brand_pricelist'],
     'data': [
         'views/pricelist_view.xml',
         'views/products_view.xml',

@@ -121,6 +121,15 @@ class Pricelist(models.Model):
                     if not cat:
                         continue
 
+                if rule.brand_id:
+                    brand_ = product.product_tmpl_id.product_brand_id
+                    while brand_:
+                        if brand_.id == rule.brand_id.id:
+                            break
+
+                    if not brand_:
+                        continue
+
                 if rule.base == 'pricelist' and rule.base_pricelist_id:
                     price_tmp = rule.base_pricelist_id._compute_price_rule([(product, qty, partner)])[product.id][0]  # TDE: 0 = price, 1 = rule
                     price = rule.base_pricelist_id.currency_id.compute(price_tmp, self.currency_id, round=False)
