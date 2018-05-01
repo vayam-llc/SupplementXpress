@@ -342,100 +342,14 @@
         <template id="website.layout_logo_show" inherit_id="website.layout" customize_show="False" active="False" name="Show Logo"/>
       
         <template id="crafito_layout_logo_show" inherit_id="theme_crafito.theme_crafito_header_layout" customize_show="True" active="True" name="Show Logo">
-            <xpath expr="//div[hasclass('header-middle')]" position="replace">
-        <div class="header-middle">
-                    <div class="row">
-                        <div class="col-xs-3 col-sm-4" >
-                            <div class="row">
-                            <div class="col-sm-10 col-md-9 pull-left" >
-                            <h4>
-                                <a class="navbar-brand" href="/" t-if="website" t-field="website.name">SX</a>
-                            </h4>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="col-xs-9 col-sm-7 col-md-5" style="float:right !important;">
-                        <div  style="float:left;min-width:200px;" class="header-search" >
-                            <form action="/shop" method="get">
-                                <t t-set="search_text" t-value="search"/>
-                                <input class="form-control" name="search" placeholder="Search" t-att-value="search" type="text"/>
-                                <button class="btn btn-default">
-                                    <i class="fa fa-search"/>
-                                    <span class="oe_search_found" />
-
-                                </button>
-                            </form>
-                        </div>
-
-			            <div style="float:left;" class="top-right">
-
-                                <t t-if="website.user_id != user_id">
-                                    <div style="margin-left:15%;" class="welcome">
-                                        <b>
-                                            <t t-esc="user_id.name"/></b>
-                                    </div>
-                                 <!--   <li>
-                                        <a href="/my/home"></a>
-                                    </li>   -->
-                                    <div >
-                                        <a style="margin-left:15%;" role="menuitem" t-attf-href="/web/session/logout?redirect=/">Logout</a>
-                                    </div>
-                                </t>
-                                <t t-if="website.user_id == user_id">
-
-
-                                        <a href="/web/login"> <i style="margin-left:80%; margin-top:10%;" class="fa fa-user-o fa-2x" aria-hidden="true"/> </a>
-
-                                    <t t-set='sign_enable' t-value="request.env['ir.config_parameter'].sudo().get_param('auth_signup.allow_uninvited')" />
-                                    <div t-if="sign_enable == 'True'">
-                                        <a href="/web/signup">Create an account</a>
-                                    </div>
-                                </t>
-
-                        </div>
-
-
-
-                        <div class="h-cart" style="float: right;">
-                            <ul>
-                                <li>
-                                    <!-- odoo11 -->
-                                    <!-- for animation of wishlist add id= -->
-                                    <a class="top-link-checkout" id="my_cart" href="/shop/cart" title="Cart">
-                                        <i class="fa fa-shopping-cart"/>
-                                        <t t-set="website_sale_order" t-value="website.sale_get_order()"/>
-                                        <span class="theme_crafito_cart_quantity" t-esc="website_sale_order and website_sale_order.cart_quantity or 0"/>
-                                    </a>
-                                    <ul class="h-cart-inner">
-                                        <li>
-                                            <div class="mini-cart-content dropdown-content left-hand block block-cart skip-content skip-content--style" id="header-cart">
-                                                <div class="" t-if="not website_sale_order or not website_sale_order.website_order_line">Your cart is empty!
-                                            </div>
-                                                <div class="" t-if="website_sale_order and website_sale_order.website_order_line">
-                                                    <!-- <div class="block-subtitle">Recently added item(s)</div>-->
-                                                    <div id="crafito_hover_total">
-                                                        <t t-call="theme_crafito.hover_total"/>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </li>
-                                 <!-- odoo11 -->
-                                <t t-if="request.env.get('product.wishlist') != None and request.env.ref('website_sale_wishlist.add_to_wishlist').active">
-                                    <t t-set='wishcount' t-value="len(request.env['product.wishlist'].current())"/>
-                                    <li id="my_wish" t-att-style="not wishcount and 'display:none;'">
-                                        <a class="top-link-checkout" href="/shop/wishlist" title="Wishlist">
-                                            <i class="fa fa-heart"/>
-                                            <span t-attf-class="my_wish_quantity o_animate_blink theme_crafito_wish_quantity label label-primary" t-esc="wishcount"/>
-                                        </a>
-                                    </li>
-                                </t>
-                                <!-- odoo 11 done  -->
-                            </ul>
-                        </div>
-                        </div>
-                    </div>
+            <xpath expr="//div[hasclass('header-middle')]//div[hasclass('logo')]" position="replace">
+                <div style="width:30%;" class="logo" >
+                    <h1>
+                        <a href="/">
+                            <span t-field="res_company.logo" t-options="{'widget': 'image'}" t-att-alt="'Logo of %s' % res_company.name" t-att-title="res_company.name" />
+                            <!-- <img alt="Theme Crafito | Passionately crafted, exquisitely designed" src="/theme_crafito/static/src/img/logo.png" title="Theme Crafito | Passionately crafted, exquisitely designed"/> -->
+                        </a>
+                    </h1>
                 </div>
             </xpath>
         </template>
