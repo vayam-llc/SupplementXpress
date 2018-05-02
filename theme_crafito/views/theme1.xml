@@ -1084,7 +1084,7 @@
                         </ul>
                         <div class="tab-content" id="description_reviews_tabs_contents">
                             <div class="tab-pane active" id="description" role="tabpanel">
-                                <div class="oe_structure mt16" id="product_full_description" itemprop="description" t-field="product.website_description"/>
+                                <div class="oe_structure mt16" id="product_full_description" itemprop="description" t-field="product.description_sale"/>
                                 <div class="oe_structure"/>
                             </div>
                         </div>
